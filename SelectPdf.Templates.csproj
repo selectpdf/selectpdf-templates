@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>SelectPdf.Templates</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>SelectPdf templates: PDF invoice API and HTML to PDF console app</Title>
+    <Authors>SelectPdf</Authors>
+    <Company>Outside Software SRL</Company>
+    <Description>dotnet new templates for generating PDFs from HTML in .NET with SelectPdf (Chromium): an ASP.NET Core API that renders a Razor invoice to PDF, with a Dockerfile that runs on Linux x64/ARM64, and a console app that converts a URL or HTML file to PDF. Uses the free SelectPdf Community Edition by default (up to 5 pages per document), or the licensed SelectPdf.Universal with --edition full.</Description>
+    <PackageTags>dotnet-new;templates;pdf;html-to-pdf;invoice;razor;aspnetcore;docker;linux;arm64;chromium;selectpdf</PackageTags>
+    <PackageProjectUrl>https://selectpdf.com/pdf-library-cross-platform/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/selectpdf/selectpdf-templates</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageType>Template</PackageType>
+    <TargetFramework>net8.0</TargetFramework>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="templates/**/*" Exclude="templates/**/bin/**;templates/**/obj/**" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>

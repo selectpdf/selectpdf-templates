@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "SelectPdf",
+  "classifications": [
+    "Web",
+    "API",
+    "PDF"
+  ],
+  "identity": "SelectPdf.Templates.Invoice",
+  "groupIdentity": "SelectPdf.Templates.Invoice",
+  "name": "PDF Invoice Web API (SelectPdf)",
+  "shortName": "selectpdf-invoice",
+  "description": "ASP.NET Core minimal API that renders a Razor invoice to PDF with SelectPdf's Chromium engine. Includes a Dockerfile that runs on Linux x64 and ARM64 with no extra system packages.",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "SelectPdfInvoice",
+  "preferNameDirectory": true,
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "Target framework.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net10.0",
+          "description": ".NET 10 (LTS)"
+        },
+        {
+          "choice": "net8.0",
+          "description": ".NET 8 (LTS)"
+        }
+      ],
+      "defaultValue": "net10.0",
+      "replaces": "net10.0"
+    },
+    "DockerVersion": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "DOTNET_VERSION=10.0",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(Framework == 'net8.0')",
+            "value": "DOTNET_VERSION=8.0"
+          },
+          {
+            "condition": "(Framework == 'net10.0')",
+            "value": "DOTNET_VERSION=10.0"
+          }
+        ]
+      }
+    },
+    "Edition": {
+      "type": "parameter",
+      "description": "SelectPdf edition.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "community",
+          "description": "Free Community Edition: HTML to PDF, up to 5 pages per document"
+        },
+        {
+          "choice": "full",
+          "description": "SelectPdf.Universal (licensed): no page limit, merging, PDF/UA, Word to PDF"
+        }
+      ],
+      "defaultValue": "community"
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "SelectPdfInvoice.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true,
+      "condition": "(!skipRestore)"
+    }
+  ]
+}

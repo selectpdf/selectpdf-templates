@@ -1,0 +1,77 @@
+@* The invoice layout. Plain HTML and CSS: Chromium renders it exactly as a browser would. *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Invoice @Invoice.Number</title>
+    <style>
+        body { font-family: "Liberation Sans", Arial, sans-serif; font-size: 11pt; color: #1f2937; margin: 0; }
+        header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+        h1 { font-size: 26pt; margin: 0; letter-spacing: 1px; }
+        .muted { color: #6b7280; }
+        .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+        .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 4px; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { display: table-header-group; } /* repeats on every page */
+        th { text-align: left; font-size: 8pt; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #1f2937; padding: 6px 4px; }
+        td { padding: 8px 4px; border-bottom: 1px solid #e5e7eb; }
+        tr { break-inside: avoid; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .totals { margin-left: auto; width: 45%; margin-top: 16px; }
+        .totals td { border: none; padding: 4px; }
+        .totals .grand td { border-top: 2px solid #1f2937; font-weight: bold; font-size: 13pt; padding-top: 8px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>INVOICE</h1>
+            <div class="muted">@Invoice.Number</div>
+        </div>
+        <div class="num">
+            <div><span class="muted">Issued</span> @Invoice.Issued.ToString("d MMM yyyy", CultureInfo.InvariantCulture)</div>
+            <div><span class="muted">Due</span> @Invoice.Due.ToString("d MMM yyyy", CultureInfo.InvariantCulture)</div>
+        </div>
+    </header>
+
+    <section class="parties">
+        <div>
+            <div class="label">From</div>
+            <strong>@Invoice.Seller.Name</strong><br />@Invoice.Seller.Address<br />@Invoice.Seller.Email
+        </div>
+        <div>
+            <div class="label">Bill to</div>
+            <strong>@Invoice.Customer.Name</strong><br />@Invoice.Customer.Address<br />@Invoice.Customer.Email
+        </div>
+    </section>
+
+    <table>
+        <thead>
+            <tr><th>Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Amount</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Invoice.Lines)
+            {
+                <tr>
+                    <td>@line.Description</td>
+                    <td class="num">@line.Quantity.ToString("0.##", CultureInfo.InvariantCulture)</td>
+                    <td class="num">@Money(line.UnitPrice)</td>
+                    <td class="num">@Money(line.Amount)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="totals">
+        <tr><td>Subtotal</td><td class="num">@Money(Invoice.Subtotal)</td></tr>
+        <tr><td>Tax (@((Invoice.TaxRate * 100).ToString("0.#", CultureInfo.InvariantCulture))%)</td><td class="num">@Money(Invoice.Tax)</td></tr>
+        <tr class="grand"><td>Total</td><td class="num">@Money(Invoice.Total)</td></tr>
+    </table>
+</body>
+</html>
+
+@code {
+    [Parameter, EditorRequired] public Invoice Invoice { get; set; } = default!;
+
+    string Money(decimal value) => $"{value.ToString("N2", CultureInfo.InvariantCulture)} {Invoice.Currency}";
+}
