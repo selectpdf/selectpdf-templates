@@ -4,7 +4,8 @@ An ASP.NET Core minimal API that renders a Razor component (`Components/InvoiceD
 
 ```bash
 dotnet run
-# open http://localhost:5000/invoices/INV-1001.pdf  (the port is printed at startup)
+# open http://localhost:5000/invoices/INV-1001.pdf
+# (the port is printed at startup)
 ```
 
 - **Layout:** `Components/InvoiceDocument.razor` holds the layout. It's plain HTML and CSS, with flexbox and grid rendered exactly as in Chrome.

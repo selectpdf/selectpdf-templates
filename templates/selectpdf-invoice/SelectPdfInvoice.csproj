@@ -14,15 +14,22 @@
     <SelectPdfRid Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux-$(_SelectPdfArch)</SelectPdfRid>
     <SelectPdfRid Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx-$(_SelectPdfArch)</SelectPdfRid>
     <SelectPdfRid Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</SelectPdfRid>
+    <SelectPdfVersion>26.5.0</SelectPdfVersion>
   </PropertyGroup>
+
+  <!-- engine packages exist for these platforms only; fail with a clear message instead of a missing-package error -->
+  <Target Name="_SelectPdfCheckPlatform" BeforeTargets="CollectPackageReferences;Build"
+          Condition="'$(SelectPdfRid)' != 'win-x64' And '$(SelectPdfRid)' != 'win-x86' And '$(SelectPdfRid)' != 'linux-x64' And '$(SelectPdfRid)' != 'linux-arm64' And '$(SelectPdfRid)' != 'osx-arm64'">
+    <Error Text="SelectPdf has no engine package for $(SelectPdfRid). Engine packages exist for win-x64, win-x86, linux-x64, linux-arm64 and osx-arm64: build or publish with -r and one of them, for example in Docker." />
+  </Target>
 
   <ItemGroup>
 <!--#if (Edition == "full") -->
-    <PackageReference Include="SelectPdf.Universal" Version="26.4.0" />
+    <PackageReference Include="SelectPdf.Universal" Version="$(SelectPdfVersion)" />
 <!--#else -->
-    <PackageReference Include="SelectPdf.HtmlToPdf.Universal" Version="26.4.0" />
+    <PackageReference Include="SelectPdf.HtmlToPdf.Universal" Version="$(SelectPdfVersion)" />
 <!--#endif -->
-    <PackageReference Include="SelectPdf.Universal.Native.$(SelectPdfRid)" Version="26.4.0" />
+    <PackageReference Include="SelectPdf.Universal.Native.$(SelectPdfRid)" Version="$(SelectPdfVersion)" />
   </ItemGroup>
 
 </Project>

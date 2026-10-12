@@ -5,14 +5,18 @@
 ```bash
 dotnet new install SelectPdf.Templates
 
-dotnet new selectpdf-invoice -o MyInvoices     # ASP.NET Core API: Razor invoice to PDF, with Dockerfile
-dotnet new selectpdf-console -o HtmlToPdf      # console app: URL or HTML file to PDF
+# ASP.NET Core API: Razor invoice to PDF, with Dockerfile
+dotnet new selectpdf-invoice -o MyInvoices
+# console app: URL or HTML file to PDF
+dotnet new selectpdf-console -o HtmlToPdf
 ```
 
 | Template | Short name | What you get |
 |---|---|---|
 | PDF Invoice Web API (SelectPdf) | `selectpdf-invoice` | Minimal API, `GET /invoices/{number}.pdf`, a Razor component invoice layout, a "Page X of Y" footer, and a Dockerfile for Linux x64/ARM64 with no `apt-get` |
 | HTML to PDF Console App (SelectPdf) | `selectpdf-console` | `dotnet run -- <url-or-file> [output.pdf]` |
+
+&nbsp;
 
 ## Options
 
