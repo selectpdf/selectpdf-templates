@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>SelectPdf.Templates</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Title>SelectPdf templates: PDF invoice API and HTML to PDF console app</Title>
     <Authors>SelectPdf</Authors>
     <Company>Outside Software SRL</Company>
@@ -12,6 +12,7 @@
     <RepositoryUrl>https://github.com/selectpdf/selectpdf-templates</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
 
     <PackageType>Template</PackageType>
     <TargetFramework>net8.0</TargetFramework>
@@ -26,6 +27,7 @@
   <ItemGroup>
     <Content Include="templates/**/*" Exclude="templates/**/bin/**;templates/**/obj/**" />
     <None Include="README.md" Pack="true" PackagePath="/" />
+    <None Include="assets/icon.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>
