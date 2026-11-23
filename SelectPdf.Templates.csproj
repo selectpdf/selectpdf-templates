@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>SelectPdf.Templates</PackageId>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Title>SelectPdf templates: PDF invoice API and HTML to PDF console app</Title>
     <Authors>SelectPdf</Authors>
     <Company>Outside Software SRL</Company>
